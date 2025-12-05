@@ -1,8 +1,3 @@
-"""
-vocabulary.py - Diccionarios de vocabulario en inglés
-Contiene las palabras organizadas por categorías
-"""
-
 # Diccionario completo de vocabulario español-inglés
 vocabulary_data = {
     "Saludos": {
@@ -65,8 +60,8 @@ vocabulary_data = {
         "abuela": "grandmother",
         "tío": "uncle",
         "tía": "aunt",
-        "primo": "cousin (male)",
-        "prima": "cousin (female)",
+        "primo": "cousin",
+        "prima": "cousin",
         "hijo": "son",
         "hija": "daughter",
         "esposo": "husband",

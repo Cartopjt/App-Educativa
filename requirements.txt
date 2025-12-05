@@ -1,1 +1,4 @@
 pyinstaller
+pygame>=2.5.0
+Pillow>=10.0.0
+numpy==2.3.5

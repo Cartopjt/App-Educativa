@@ -1,50 +1,45 @@
 import sys
 import os
-from tkinter import Tk, messagebox
 
-# Intentar importar los módulos necesarios
-try:
-    from game_ui import EnglishGame
-    import vocabulary
-    from data_manager import DataManager
+def setup_paths():
+    if getattr(sys, 'frozen', False):
+        base_dir = sys._MEIPASS
+    else:
+        base_dir = os.path.dirname(os.path.abspath(__file__))
     
-    def main():
-        """Función principal que inicia la aplicación"""
-        try:
-            # Crear ventana principal
-            root = Tk()
-            
-            # Configurar ventana
-            root.title("English Learning Game")
-            root.geometry("900x700")
-            root.configure(bg='#2C3E50')
-            
-            # Intentar cargar el icono si existe
-            try:
-                if os.path.exists("icon.ico"):
-                    root.iconbitmap("icon.ico")
-            except:
-                pass
-            
-            # Inicializar gestor de datos
-            data_manager = DataManager()
-            
-            # Crear e iniciar la aplicación
-            app = EnglishGame(root, data_manager)
-            
-            # Iniciar bucle principal
-            root.mainloop()
-            
-        except Exception as e:
-            # Mostrar mensaje de error en caso de fallo
-            error_msg = f"Error al iniciar la aplicación:\n{str(e)}"
-            print(error_msg)
-            messagebox.showerror("Error", error_msg)
+    # Añadir rutas
+    sys.path.insert(0, base_dir)
     
-    if __name__ == "__main__":
-        main()
+    # Verificar carpetas existentes
+    for folder in ['core', 'utils', 'ui']:
+        folder_path = os.path.join(base_dir, folder)
+        if os.path.exists(folder_path):
+            sys.path.insert(0, folder_path)
+    
+    return base_dir
+
+def main():
+    """Función principal"""
+    try:
+        base_dir = setup_paths()
+        print("🌟 Iniciando Aventura de Inglés...")
         
-except ImportError as e:
-    print(f"Error de importación: {e}")
-    print("Asegúrate de que todos los archivos del proyecto están en la misma carpeta.")
-    input("Presiona Enter para salir...")
+        from core.game import Game
+        from ui.app import EnglishApp  
+        
+        game = Game()
+        app = EnglishApp(game)
+        
+        app.run()
+        
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        import traceback
+        traceback.print_exc()
+        
+        if not getattr(sys, 'frozen', False):
+            input("\nPresiona Enter para salir...")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()

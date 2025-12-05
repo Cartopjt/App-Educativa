@@ -3,18 +3,14 @@ import os
 from datetime import datetime
 
 class DataManager:
-    """Clase para gestionar los datos del juego"""
-    
     def __init__(self, data_dir="data"):
         self.data_dir = data_dir
         self.progress_file = os.path.join(data_dir, "progress.json")
         self.stats_file = os.path.join(data_dir, "stats.json")
         
-        # Asegurar que el directorio existe
         self.ensure_data_dir()
     
     def ensure_data_dir(self):
-        """Asegura que el directorio de datos existe"""
         try:
             if not os.path.exists(self.data_dir):
                 os.makedirs(self.data_dir)
@@ -34,7 +30,6 @@ class DataManager:
             if os.path.exists(self.progress_file):
                 with open(self.progress_file, 'r', encoding='utf-8') as f:
                     progress = json.load(f)
-                    # Asegurar que todas las claves existan
                     for key, value in default_progress.items():
                         if key not in progress:
                             progress[key] = value
@@ -65,14 +60,7 @@ class DataManager:
             return False
     
     def update_stats(self, game_type, correct_answers, total_questions):
-        """
-        Actualiza las estadísticas del usuario
-        
-        Args:
-            game_type: Tipo de juego jugado
-            correct_answers: Número de respuestas correctas
-            total_questions: Número total de preguntas
-        """
+        # Actualiza las estadísticas del usuario
         try:
             # Cargar estadísticas existentes
             stats = self.load_stats()
@@ -107,12 +95,6 @@ class DataManager:
             return False
     
     def load_stats(self):
-        """
-        Carga las estadísticas del usuario
-        
-        Returns:
-            dict: Diccionario con las estadísticas
-        """
         default_stats = {
             "total_games": 0,
             "total_questions": 0,
@@ -138,12 +120,6 @@ class DataManager:
         return default_stats
     
     def save_stats(self, stats_data):
-        """
-        Guarda las estadísticas del usuario
-        
-        Args:
-            stats_data: Diccionario con estadísticas a guardar
-        """
         try:
             # Actualizar fecha de última jugada
             stats_data['last_play'] = datetime.now().isoformat()
@@ -158,12 +134,6 @@ class DataManager:
             return False
     
     def get_achievements(self):
-        """
-        Obtiene los logros del usuario basados en su progreso
-        
-        Returns:
-            list: Lista de logros desbloqueados
-        """
         progress = self.load_progress()
         stats = self.load_stats()
         
@@ -198,7 +168,6 @@ class DataManager:
         return achievements
     
     def reset_progress(self):
-        """Reinicia todo el progreso del usuario"""
         try:
             default_progress = {
                 "score": 0,
