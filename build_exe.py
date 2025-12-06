@@ -24,7 +24,7 @@ def build_executable():
         '--noconfirm',  # No preguntar confirmación
         
         # Icono de la aplicación
-        '--icon=assets/icons/icon.ico',
+        '--icon=assets/icon/icon.ico',
         
         # Incluir recursos
         '--add-data=assets;assets',
